@@ -1,5 +1,7 @@
 int fadeWidth = 0;
 int fadeSpeed = 10;
+
+// Wipes the screen with a black transition
 boolean fade(){
   fill(0);
   rect(0,0,fadeWidth,height);

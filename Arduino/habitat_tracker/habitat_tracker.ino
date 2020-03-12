@@ -1,23 +1,27 @@
 #include <Servo.h>
 
+// Declaring pins 
 int relayPin = 8;
 int servoPin = 9;
 
 Servo servo;
 
 void setup() {
-  // put your setup code here, to run once:
-
+  // Initializing the serial port connection
   Serial.begin(9600);
+
+  // Setting up the Arduino pins to interact with the servo and relay
   servo.attach(servoPin);
   pinMode(8, OUTPUT);
 }
 
 void loop() {
+  // Continually check for messages on the serial port
   char state = Serial.read();
   waterFlower(state);
 }
 
+// Based on the state, moves the servo to a specified angle and starts the water pump
 void waterFlower(int state)
 {
   if (state == 0)

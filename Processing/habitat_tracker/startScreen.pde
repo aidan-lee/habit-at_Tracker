@@ -5,12 +5,11 @@ int startButtonX = 228;
 int startButtonY = 646;
 
 void startScreenSetup() {
-  println("start screen");
-
 }
 
+// Draws the start screen
 void startScreenDraw() {
-   background(255, 242, 222);
+  background(255, 242, 222);
  
   fill(56, 138, 102);
   
@@ -22,7 +21,7 @@ void startScreenDraw() {
   image(plantImage2, 420, 335);
   image(plantImage3, 130, 315);
   
- strokeWeight(2);
+  strokeWeight(2);
   
   if (isStartButtonHovered()) {
      fill(66, 166, 122);
@@ -38,6 +37,7 @@ void startScreenDraw() {
 
 }
 
+// Checks if the start button is hovered 
 boolean isStartButtonHovered() {
   if (mouseX >= startButtonX && mouseX <= startButtonX + startButtonWidth && 
     mouseY >= startButtonY && mouseY <= startButtonY + startButtonHeight) {

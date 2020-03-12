@@ -1,3 +1,6 @@
+// The ActivityCard class
+// Contains all data and functionality pertaining to the tasks on the activity screen
+
 class ActivityCard {
   int cardX;
   int cardY;
@@ -50,11 +53,11 @@ class ActivityCard {
     this.isNew = true;
   }
   
+  // Draw the card on the screen
   void renderCard() {
     stroke(0, 0, 0);
     strokeWeight(2);
-    
-    
+      
     if(isCheckCircleHovered()) {
      fill(230, 218, 200);
     }
@@ -84,6 +87,7 @@ class ActivityCard {
     }
   }
   
+  // Checks if the mouse pointer is hovering over a circle 
   boolean isCheckCircleHovered() {
     float disX = checkCircleX - mouseX;
     float disY = checkCircleY - mouseY;
@@ -94,6 +98,7 @@ class ActivityCard {
     }
   }
   
+  // Checks if the mouse pointer is hovering over the card itself 
   boolean isCardHovered() {
     if (mouseX >= cardX && mouseX <= cardX + cardWidth && 
       mouseY >= cardY && mouseY <= cardY + cardHeight) {
@@ -104,6 +109,7 @@ class ActivityCard {
     }
   }
   
+  // Checks if the mouse poitner is hovering over the trash icon
   boolean isTrashHovered() {     
     if (mouseX >= this.trashX && mouseX <= this.trashX + this.trashWidth && 
       mouseY >= this.trashY && mouseY <= this.trashY + this.trashWidth) {

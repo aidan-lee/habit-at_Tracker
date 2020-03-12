@@ -18,6 +18,7 @@ void activityScreenSetup() {
   cards = new ArrayList<ActivityCard>();
 }
 
+// Draw the activity screen
 void activityScreenDraw() {  
  background(255, 242, 222);
  
@@ -33,11 +34,12 @@ void activityScreenDraw() {
   cards.get(i).renderCard();
  }
  
-
   drawNextButton();
 
 }
 
+// Called when the user clicks the '+' button
+// Adds another activity to the UI
 void addCard() {
   ActivityCard newCard = new ActivityCard(cardXOffset, cardYOffset, cardCount);
   cards.add(newCard);
@@ -46,6 +48,7 @@ void addCard() {
   cardYOffset += 90;
 }
 
+// Draws the '+' button
 void drawPlus() {
   if(isPlusButtonHovered()) {
      fill(66, 166, 122);
@@ -53,12 +56,13 @@ void drawPlus() {
   else {
       fill(56, 138, 102); 
   }
-   rect(plusButtonX, plusButtonY, plusButtonWidth, plusButtonHeight, 20);  
+ rect(plusButtonX, plusButtonY, plusButtonWidth, plusButtonHeight, 20);  
  fill(255, 242, 222);
  textFont(amaticBoldFont, 80);
  text("+", 569, 70);
 }
   
+// Draws the 'next day' button  
 void drawNextButton() {
   if(isNextButtonHovered()) {
      fill(66, 166, 122);
@@ -73,6 +77,7 @@ void drawNextButton() {
   text("Next Day", 270, 850);
 }
 
+// Checks if the 'next day' button is hovered
 boolean isNextButtonHovered() {
   if (mouseX >= nextButtonX && mouseX <= nextButtonX + nextButtonWidth && 
     mouseY >= nextButtonY && mouseY <= nextButtonY + nextButtonHeight) {
@@ -83,6 +88,7 @@ boolean isNextButtonHovered() {
   }
 }
 
+// Checks if the '+' button is hovered 
 boolean isPlusButtonHovered() {
   if (mouseX >= plusButtonX && mouseX <= plusButtonX + plusButtonWidth && 
     mouseY >= plusButtonY && mouseY <= plusButtonY + plusButtonHeight) {
@@ -93,6 +99,7 @@ boolean isPlusButtonHovered() {
   }
 }
 
+// Checks if a circle has been clicked on and sets the card's state accordingly 
 void checkCicleClick() {
  for (int i = 0; i < cards.size(); i++) { 
     cards.get(i).renderCard();
@@ -102,10 +109,10 @@ void checkCicleClick() {
  }
 }
 
+// Checks if the delete icon for a card has been clicked
 boolean checkDeleteClick() {
   for (int i = 0; i < cards.size(); i++) { 
     if (cards.get(i).isTrashHovered()) {
-      println(cards);
       removeCard(i);
       i--;
       return true;
@@ -114,9 +121,8 @@ boolean checkDeleteClick() {
  return false;
 }
 
+// Removes the card from the array and adjusts the positioning of the remaining cards
 void removeCard(int index) {
-  
-  println("removed card for " + index);
   for (int i = 0; i < cards.size(); i++) { 
     if (i > index) {
       cards.get(i).cardY -= 90;
@@ -125,12 +131,12 @@ void removeCard(int index) {
       cards.get(i).trashY -= 90;
       cards.get(i).renderCard();
     }
-
  }  
    cards.remove(index);
    cardYOffset -= 90;
 }
 
+// After the 'next day' button is pressed, send the checked tasks to the Arduino remove all checks from circles
 void removeCircleChecks() {
   sendToArduino();
   for (int i = 0; i < cards.size(); i++) { 
@@ -138,24 +144,25 @@ void removeCircleChecks() {
   }  
 }
 
+// Send task completion data to the Arduino
 void sendToArduino() {
-  println("sending");
   for (int i = 0; i < cards.size(); i++) { 
     println(cards.get(i).isChecked);
     if (cards.get(i).isChecked) {
-      println("printing " + i);
       myPort.write(i);
       delay(3000);
     }
   }
 }
 
+// Set cards as old, so they can no longer be edited 
 void setCardsOld() {
   for (int i = 0; i < cards.size(); i++) { 
     cards.get(i).isNew = false; 
   }
 }
 
+// Returns the first card marked new 
 ActivityCard getNewCard() {
   for (int i = 0; i < cards.size(); i++) { 
     ActivityCard card = cards.get(i);
@@ -166,6 +173,7 @@ ActivityCard getNewCard() {
   return null;
 }
 
+// Appends the letter to the name of the card 
 void appendCardName(char letter) {
   ActivityCard newCard = getNewCard();
   if (newCard != null) {
@@ -176,6 +184,7 @@ void appendCardName(char letter) {
   }
 }
 
+// Removes the last letter from the card title 
 void backspaceCardName() {
   ActivityCard newCard = getNewCard();
   if (newCard != null) {

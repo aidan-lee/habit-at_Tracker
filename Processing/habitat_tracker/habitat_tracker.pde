@@ -2,7 +2,7 @@ import processing.serial.*;
 Serial myPort;
 boolean on = false;
 
-
+// Defining global variables, fonts, and images
 boolean started = false;
 PFont amaticBoldFont;
 PFont amaticRegularFont;
@@ -18,17 +18,19 @@ boolean fading = false;
 boolean finishedFading = false;
 
 void setup() {
+  // Setting the size of the viewport
   size(650, 940);
 
+  // Calling the setup functions for both screens
   startScreenSetup();
   activityScreenSetup();
 
-  // Uncomment when arduino connected
+  // Initializing the connection to the Arduino
   println(Serial.list());
   myPort = new Serial(this, Serial.list()[0], 9600);
   myPort.buffer(1);
   
-  
+  // Initializing the global variables 
   amaticBoldFont = createFont("AmaticSC-Bold.ttf", 60);
   amaticRegularFont = createFont("AmaticSC-Regular.ttf", 60);
   plantImage1 = loadImage("plant1.png");
@@ -44,6 +46,7 @@ void setup() {
   hoverTrash.resize(40, 40);
 }
 
+// Continually draws to the screen
 void draw() {
   if (!started) {
       startScreenDraw();
@@ -59,24 +62,25 @@ void draw() {
   else {
     activityScreenDraw();   
   }
-
 }
 
+// Fires on key down. 
+// Calls different functions, depending on what was pressed. 
 void keyPressed() {
   if (keyCode == ENTER) {
-    println("enter");
     started = true;
     setCardsOld();
   }
-  else if (keyCode == DELETE) {
+  else if (keyCode == BACKSPACE) {
     backspaceCardName();
   }
   else {
-    println(key);
     appendCardName(key);
   }
 }
 
+// Fires when mouse was clicked
+// Detects what was clicked on and calls an appropriate function
 void mouseClicked() {
   if (isStartButtonHovered()) {
     started = true;
